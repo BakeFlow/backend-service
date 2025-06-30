@@ -3,7 +3,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 
-const Seller = require("../models/seller.model");
+const Seller = require("../../../models/seller.model");
 
 const user_roles = require("../../../core/enums/user.roles.enum");
 
