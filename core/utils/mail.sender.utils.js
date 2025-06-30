@@ -10,24 +10,26 @@ const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLEINT_SECRET, REDIRECT_U
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 async function sendMail(email, title, body) {
-  const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
+  console.log("Sending email..." + email + " " + title + " " + body);
 
-  const message = [`From: ${process.env.GMAIL}`, `To: ${email}`, "Content-Type: text/html; charset=utf-8", "MIME-Version: 1.0", `Subject: ${title}`, "", body].join("\n");
+  // const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
-  const encodedMessage = Buffer.from(message).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  // const message = [`From: ${process.env.GMAIL}`, `To: ${email}`, "Content-Type: text/html; charset=utf-8", "MIME-Version: 1.0", `Subject: ${title}`, "", body].join("\n");
 
-  try {
-    await gmail.users.messages.send({
-      userId: "me",
-      requestBody: {
-        raw: encodedMessage,
-      },
-    });
-    console.log("Email sent successfully!");
-  } catch (error) {
-    console.error("Error sending email:", error);
-    throw error;
-  }
+  // const encodedMessage = Buffer.from(message).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+
+  // try {
+  //   await gmail.users.messages.send({
+  //     userId: "me",
+  //     requestBody: {
+  //       raw: encodedMessage,
+  //     },
+  //   });
+  //   console.log("Email sent successfully!");
+  // } catch (error) {
+  //   console.error("Error sending email:", error);
+  //   throw error;
+  // }
 }
 
 module.exports = sendMail;

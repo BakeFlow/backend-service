@@ -41,12 +41,12 @@ const register = async (req, res) => {
     await newUser.save();
 
     const otp = otpGenerator.generate(4, { upperCase: false, specialChars: false });
-    const OTP = new OTP({
+    const OTPdoc = new OTP({
       email: newUser.email,
       otp: otp,
       count: 0, // Initialize count to 0
     });
-    await OTP.save();
+    await OTPdoc.save();
 
     res.status(201).json({ success: true, message: "Buyer registered successfully" });
   } catch (error) {
