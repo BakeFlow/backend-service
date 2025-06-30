@@ -97,16 +97,17 @@ const getAllSellers = async (req, res) => {
     const { page = 1, limit = 50 } = req.query;
     const skip = (page - 1) * limit;
     const totalSellers = await Seller.countDocuments();
+    const totalPages = Math.ceil(totalSellers / limit);
     const sellers = await Seller.find().skip(skip).limit(parseInt(limit)).populate("userId", "name email");
 
     res.status(200).json({
       success: true,
       data: sellers,
       meta: {
-        total: totalSellers,
+        totalSellers: totalSellers,
+        totalPages: totalPages,
         page: parseInt(page),
         limit: parseInt(limit),
-        totalPages: Math.ceil(totalSellers / limit),
       },
     });
   } catch (error) {

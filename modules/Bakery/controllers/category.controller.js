@@ -18,32 +18,7 @@ const createCategory = async (req, res) => {
       return res.status(400).json({ success: false, error: "Please upload an image file" });
     }
 
-    const { buffer, mimetype, size } = req.file;
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    const allowedSize = 3 * 1024 * 1024; // 1MB
-
-    if (!mimetype.startsWith("image") || !allowedTypes.includes(mimetype)) {
-      return res.status(400).json({ success: false, error: "Invalid image format. Only JPEG, PNG, and JPG are allowed." });
-    }
-
-    if (size > allowedSize) {
-      return res.status(400).json({ success: false, error: "Image size should not exceed 1MB" });
-    }
-
-    // Save image using Sharp
-    const baseURL = process.env.BASE_URL || "http://localhost:5000";
-    const timestamp = Date.now();
-    const uuid = uuidv4();
-    const filename = `${uuid}_${timestamp}.jpeg`;
-
-    const uploadFolder = process.env.UPLOAD_PATH || "./uploads";
-
-    fs.access(uploadFolder, (error) => {
-      if (error) fs.mkdirSync(uploadFolder);
-    });
-
-    await sharp(buffer).jpeg().toFile(`${uploadFolder}/${filename}`);
-    const imageLink = `${baseURL}/api/assets/category/${filename}`;
+    const imageLink = processImageUpload(req.file, "categories");
 
     // Create new category
     const category = new Category({
@@ -56,6 +31,7 @@ const createCategory = async (req, res) => {
 
     return res.status(201).json({ success: true, data: category });
   } catch (error) {
+    console.error("Error creating category:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -106,32 +82,10 @@ const updateCategory = async (req, res) => {
     // If an image is uploaded, process it
     let imageLink = existingCategory.image; // Keep existing image if no new image is uploaded
     if (req.file) {
-      const { buffer, mimetype, size } = req.file;
-      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-      const allowedSize = 3 * 1024 * 1024; // 1MB
-
-      if (!mimetype.startsWith("image") || !allowedTypes.includes(mimetype)) {
-        return res.status(400).json({ success: false, error: "Invalid image format. Only JPEG, PNG, and JPG are allowed." });
+      imageLink = processImageUpload(req.file, "category");
+      if (!imageLink) {
+        return res.status(400).json({ success: false, error: "Failed to process image upload" });
       }
-
-      if (size > allowedSize) {
-        return res.status(400).json({ success: false, error: "Image size should not exceed 1MB" });
-      }
-
-      // Save new image using Sharp
-      const baseURL = process.env.BASE_URL || "http://localhost:5000";
-      const timestamp = Date.now();
-      const uuid = uuidv4();
-      const filename = `${uuid}_${timestamp}.jpeg`;
-
-      const uploadFolder = process.env.UPLOAD_PATH || "./uploads";
-
-      fs.access(uploadFolder, (error) => {
-        if (error) fs.mkdirSync(uploadFolder);
-      });
-
-      await sharp(buffer).jpeg().toFile(`${uploadFolder}/${filename}`);
-      imageLink = `${baseURL}/api/assets/category/${filename}`;
     }
 
     const category = await Category.findByIdAndUpdate(id, { name, description, image: imageLink }, { new: true });
