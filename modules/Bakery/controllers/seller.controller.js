@@ -6,6 +6,8 @@ const path = require("path");
 const Seller = require("../../../models/seller.model");
 
 const user_roles = require("../../../core/enums/user.roles.enum");
+const User = require("../../../models/user.model");
+const processImageUpload = require("../../../core/utils/file.upload.utils");
 
 //create seller
 const createSeller = async (req, res) => {
@@ -34,6 +36,14 @@ const createSeller = async (req, res) => {
       return res.status(400).json({ success: false, message: "Seller already exists for this user" });
     }
 
+    const imageRes = await processImageUpload(req.file, "sellers");
+    console.log("Image upload result:", imageRes);
+    if (!imageRes.success) {
+      return res.status(400).json({ success: false, message: imageRes.message });
+    }
+
+    const logo = imageRes.data.imageLink;
+
     // Create a new seller instance
     const newSeller = new Seller({
       user: userId,
@@ -42,7 +52,7 @@ const createSeller = async (req, res) => {
       description,
       location,
       address,
-      logo: "",
+      logo: logo,
     });
 
     await newSeller.save();

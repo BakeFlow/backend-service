@@ -27,6 +27,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
+/* * ==============================================================================
+ * Passport.js Configuration
+ * ================================================================================
+ */
+
 app.use(passport.initialize());
 require("./core/strategies/local.strategy");
 require("./core/strategies/jwt.strategy");
@@ -46,11 +51,24 @@ app.get("/api/ping", (req, res) => {
   res.status(200).json({ success: true, message: "Server is running" });
 });
 
+/*
+ * ==============================================================================
+ * Static Assets
+ * ==============================================================================
+ */
+
+const uploadPath = process.env?.ENV === "DEV" ? path.join(__dirname, process.env.UPLOAD_PATH) : process.env.UPLOAD_PATH;
+app.use("/api/assets/sellers/", express.static(uploadPath + "/sellers"));
+
+/*
+ * ==============================================================================
+ * 404 Handler
+ * ==============================================================================
+ */
 app.all("/api/*name", (req, res) => {
   res.status(404).json({ success: false, message: "Requested resource not found" });
 });
 
-// Error handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
