@@ -142,40 +142,12 @@ const updateSeller = async (req, res) => {
 
     // Handle image upload if present
     if (req.file) {
-      const { buffer, mimetype, size } = req.file;
-      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-      const allowedSize = 3 * 1024 * 1024; // 3MB
-
-      if (!mimetype.startsWith("image") || !allowedTypes.includes(mimetype)) {
-        return res.status(400).json({ success: false, error: "Invalid image format. Only JPEG, PNG, and JPG are allowed." });
+      const imageRes = await processImageUpload(req.file, "sellers");
+      if (!imageRes.success) {
+        return res.status(400).json({ success: false, message: imageRes.message });
       }
-
-      if (size > allowedSize) {
-        return res.status(400).json({ success: false, error: "Image size should not exceed 3MB" });
-      }
-
-      // Save image using sharp
-      const baseURL = process.env.BASE_URL || "http://localhost:5000";
-      const uploadFolder = process.env.UPLOAD_PATH || "./uploads/sellers"; // use a folder like /uploads/sellers
-
-      // Ensure folder exists
-      if (!fs.existsSync(uploadFolder)) {
-        fs.mkdirSync(uploadFolder, { recursive: true });
-      }
-
-      const timestamp = Date.now();
-      const uuid = uuidv4();
-      const filename = `${uuid}_${timestamp}.jpeg`;
-
-      const fullPath = path.join(uploadFolder, filename);
-      await sharp(buffer).jpeg().toFile(fullPath);
-
-      // Construct accessible image URL
-      const imageRelativePath = path.relative("./uploads", fullPath); // remove root upload path
-      const imageLink = `${baseURL}/api/assets/${imageRelativePath.replace(/\\/g, "/")}`; // Normalize path
-
       // Add to update fields
-      updateFields.logo = imageLink;
+      updateFields.logo = imageRes.data.imageLink;
     }
 
     if (Object.keys(updateFields).length === 0) {
