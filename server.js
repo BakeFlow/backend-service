@@ -44,7 +44,7 @@ require("./core/strategies/google.strategy");
  */
 
 app.use("/api/auth", require("./modules/auth/routes/auth.route"));
-app.use("/api/bakery", require("./modules/Bakery/bakery.route"));
+app.use("/api/bakery", require("./modules/bakery/bakery.route"));
 
 //ping route
 app.get("/api/ping", (req, res) => {
