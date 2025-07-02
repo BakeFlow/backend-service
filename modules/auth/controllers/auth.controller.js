@@ -54,6 +54,49 @@ const register = async (req, res) => {
   }
 };
 
+//login
+const login = async (req, res) => {
+  const user = req.user;
+
+  if (!user) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid credentials",
+    });
+  }
+
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  const tokenStore = await User.findById(user._id).select("+refreshToken");
+  if (!tokenStore) {
+    return res.status(400).json({
+      success: false,
+      error: "User not found",
+    });
+  }
+
+  tokenStore.refreshToken.push(refreshToken);
+  // Implement max tokens per user
+  const MAX_TOKENS = 5;
+  if (tokenStore.refreshToken.length > MAX_TOKENS) {
+    tokenStore.refreshToken = tokenStore.refreshToken.slice(-MAX_TOKENS);
+  }
+  await tokenStore.save();
+
+  user.password = undefined;
+  user.refreshToken = undefined;
+
+  res
+    .status(200)
+    .cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 7 * 24 * 60 * 60 * 1000 })
+    .json({
+      success: true,
+      message: "User logged in successfully",
+      data: { user: user, accessToken: accessToken, refreshToken: refreshToken },
+    });
+};
+
 //google auth callback
 const googleCallback = async (req, res) => {
   try {
@@ -475,6 +518,7 @@ const logout = async (req, res) => {
 
 module.exports = {
   register,
+  login,
   googleCallback,
   verifyOtp,
   resendOTP,
