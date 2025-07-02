@@ -168,8 +168,11 @@ const updateProduct = async (req, res) => {
 
     // Optional image update
     if (req.file) {
-      const imageLink = await processImageUpload(req.file, "products");
-      updateFields.image = imageLink;
+      const imageRes = await processImageUpload(req.file, "products");
+      if (!imageRes.success) {
+        return res.status(400).json({ success: false, message: imageRes.message });
+      }
+      updateFields.image = imageRes.data.imageLink; // Use the processed image link
     }
 
     // Apply updates
@@ -179,7 +182,11 @@ const updateProduct = async (req, res) => {
     await product.populate("seller", "name email");
     await product.populate("category", "name image");
 
-    return res.status(200).json({ success: true, data: product });
+    return res.status(200).json({
+      success: true,
+      message: "Product updated successfully.",
+      data: product,
+    });
   } catch (error) {
     console.error("Error updating product:", error);
     return res.status(500).json({ success: false, message: "Internal server error" });
