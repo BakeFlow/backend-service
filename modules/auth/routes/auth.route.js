@@ -6,7 +6,10 @@ const { register, login, googleCallback, verifyOtp, resendOTP, forgotPassword, r
 
 router.post("/register", register);
 router.post("/login", passport.authenticate("local-email", { session: false }), login);
-router.get("/google/callback", googleCallback);
+
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/google/callback", passport.authenticate("google", { session: false }), googleCallback);
+
 router.post("/verify-otp", verifyOtp);
 router.post("/resend-otp", resendOTP);
 router.post("/forgot-password", forgotPassword);
