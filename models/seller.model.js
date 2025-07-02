@@ -5,7 +5,7 @@ const sellerSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: User.name,
+      ref: User,
       required: true,
     },
     businessName: {
