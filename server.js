@@ -59,6 +59,8 @@ app.get("/api/ping", (req, res) => {
 
 const uploadPath = process.env?.ENV === "DEV" ? path.join(__dirname, process.env.UPLOAD_PATH) : process.env.UPLOAD_PATH;
 app.use("/api/assets/sellers/", express.static(uploadPath + "/sellers"));
+app.use("/api/assets/products/", express.static(uploadPath + "/products"));
+app.use("/api/assets/categories/", express.static(uploadPath + "/categories"));
 
 /*
  * ==============================================================================

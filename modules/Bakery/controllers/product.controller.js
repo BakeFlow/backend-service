@@ -11,7 +11,7 @@ const createProduct = async (req, res) => {
       return res.status(400).json({ success: false, message: "All fields are required." });
     }
 
-    if (typeof price !== "number" || price < 0) {
+    if (price < 0) {
       return res.status(400).json({ success: false, message: "Price must be a positive number." });
     }
 
@@ -23,7 +23,11 @@ const createProduct = async (req, res) => {
       return res.status(400).json({ success: false, message: "Image file is required." });
     }
 
-    const imageLink = await processImageUpload(req.file, "products");
+    const imageRes = await processImageUpload(req.file, "products");
+    if (!imageRes.success) {
+      return res.status(400).json({ success: false, message: imageRes.message });
+    }
+    const imageLink = imageRes.data.imageLink; // Use the processed image link
 
     const productData = {
       seller: sellerId,
