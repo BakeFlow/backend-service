@@ -15,7 +15,8 @@ router.post("/resend-otp", resendOTP);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 router.get("/me", passport.authenticate("jwt", { session: false }), me);
+
 router.post("/refresh", refresh);
-router.post("/logout", logout);
+router.post("/logout", passport.authenticate("jwt", { session: false }), logout);
 
 module.exports = router;
