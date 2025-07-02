@@ -88,10 +88,12 @@ const updateCategory = async (req, res) => {
     // If an image is uploaded, process it
     let imageLink = existingCategory.image; // Keep existing image if no new image is uploaded
     if (req.file) {
-      imageLink = processImageUpload(req.file, "category");
-      if (!imageLink) {
+      const imageRes = await processImageUpload(req.file, "category");
+      if (!imageRes.success) {
         return res.status(400).json({ success: false, error: "Failed to process image upload" });
       }
+
+      imageLink = imageRes.data.imageLink; // Update with new image link
     }
 
     const category = await Category.findByIdAndUpdate(id, { name, description, image: imageLink }, { new: true });
