@@ -3,6 +3,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 
 const Category = require("../../../models/category.model");
+const processImageUpload = require("../../../core/utils/file.upload.utils");
 
 //create category
 const createCategory = async (req, res) => {
@@ -18,7 +19,12 @@ const createCategory = async (req, res) => {
       return res.status(400).json({ success: false, error: "Please upload an image file" });
     }
 
-    const imageLink = processImageUpload(req.file, "categories");
+    const imageRes = await processImageUpload(req.file, "categories");
+    if (!imageRes.success) {
+      return res.status(400).json({ success: false, message: imageRes.message });
+    }
+
+    const imageLink = imageRes.data.imageLink;
 
     // Create new category
     const category = new Category({
