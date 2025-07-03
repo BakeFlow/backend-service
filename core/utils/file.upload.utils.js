@@ -40,4 +40,36 @@ const processImageUpload = async (reqFile, uploadSubfolder) => {
   }
 };
 
-module.exports = processImageUpload;
+const processMultipleImageUploads = async (files, uploadSubfolder) => {
+  const results = [];
+
+  for (const file of files) {
+    const result = await processImageUpload(file, uploadSubfolder);
+    results.push(result);
+  }
+
+  const failed = results.filter((r) => !r.success);
+  if (failed.length > 0) {
+    return {
+      success: false,
+      message: "Some images failed to upload.",
+      data: {
+        uploaded: results.filter((r) => r.success).map((r) => r.data.imageLink),
+        failed: failed.map((r) => r.message),
+      },
+    };
+  }
+
+  return {
+    success: true,
+    message: "All images uploaded successfully.",
+    data: {
+      uploaded: results.map((r) => r.data.imageLink),
+    },
+  };
+};
+
+module.exports = {
+  processImageUpload,
+  processMultipleImageUploads,
+};
