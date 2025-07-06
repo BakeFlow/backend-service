@@ -257,6 +257,42 @@ const deleteReview = async (req, res) => {
   }
 };
 
+//get top rated sellers
+const getTopRatedSellers = async (req, res) => {
+  try {
+    const topSellers = await Seller.aggregate([
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "seller",
+          as: "reviews",
+        },
+      },
+      {
+        $addFields: {
+          averageRating: { $avg: "$reviews.rating" },
+          reviewCount: { $size: "$reviews" },
+        },
+      },
+      {
+        $match: { reviewCount: { $gt: 0 } }, // Only include sellers with reviews
+      },
+      {
+        $sort: { averageRating: -1 }, // Sort by average rating descending
+      },
+      {
+        $limit: 10, // Limit to top 10 sellers
+      },
+    ]);
+
+    res.status(200).json({ success: true, message: "Top rated sellers fetched successfully", data: topSellers });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message || "Server error" });
+  }
+};
+
 module.exports = {
   createReview,
   getReviewsBySeller,
@@ -265,4 +301,5 @@ module.exports = {
   getReviewById,
   updateReview,
   deleteReview,
+  getTopRatedSellers,
 };

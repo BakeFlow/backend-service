@@ -10,3 +10,5 @@ router.get("/subscriptions/seller/:sellerId", getSubscriptionsBySellerId);
 router.get("/subscription/:id", getSubscriptionById);
 router.put("/subscription/:id", updateSubscription);
 router.delete("/subscription/:id", deleteSubscription);
+
+module.exports = router;
