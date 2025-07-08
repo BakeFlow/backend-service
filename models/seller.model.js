@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./user.model");
+const seller_status = require("../core/enums/seller.status.enum");
 
 const sellerSchema = new mongoose.Schema(
   {
@@ -36,6 +37,11 @@ const sellerSchema = new mongoose.Schema(
     logo: {
       type: String,
       required: false,
+    },
+    status: {
+      type: String,
+      enum: Object.values.values(seller_status),
+      default: seller_status.PENDING,
     },
   },
   {
