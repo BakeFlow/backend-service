@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { createCategory, getAllCategories, getCategoryById, updateCategory, deleteCategory } = require("./controllers/category.controller");
 const { createSeller, getSellerByUserId, getSellerById, getAllSellers, updateSeller, addLogo } = require("./controllers/seller.controller");
-const { createProduct, getAllProducts, getProductById, getProductsBySellerId, updateProduct, deleteProduct } = require("./controllers/product.controller");
+const { createProduct, getAllProducts, getProductById, getProductsBySellerId, updateProduct, deleteProduct, getTotalProductsCount } = require("./controllers/product.controller");
 const { createReview, getReviewsBySeller, getReviewsByUser, getAllReviews, getReviewById, updateReview, deleteReview, getTopRatedSellers } = require("./controllers/review.controller");
 
 const upload = require("../../core/configs/multer.config");
@@ -30,6 +30,7 @@ router.get("/product/:productId", getProductById);
 router.get("/products/seller/:sellerId", getProductsBySellerId);
 router.put("/product/:productId", upload.single("image"), updateProduct);
 router.delete("/product/:productId", deleteProduct);
+router.get("/products/count", getTotalProductsCount);
 
 //review routes
 router.post("/review/seller", upload.array("images", 5), createReview);

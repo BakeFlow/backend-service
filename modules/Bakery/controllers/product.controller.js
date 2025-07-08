@@ -215,6 +215,17 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+//get total products count
+const getTotalProductsCount = async (req, res) => {
+  try {
+    const totalProducts = await Product.countDocuments();
+    return res.status(200).json({ success: true, data: { totalProducts } });
+  } catch (error) {
+    console.error("Error fetching total products count:", error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   createProduct,
   getAllProducts,
@@ -222,4 +233,5 @@ module.exports = {
   getProductsBySellerId,
   updateProduct,
   deleteProduct,
+  getTotalProductsCount,
 };

@@ -1,0 +1,1401 @@
+{
+	"info": {
+		"_postman_id": "c00dfb88-c7dd-4e9b-a59b-06caf2444831",
+		"name": "CAKE HUB API",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" width=\"2162\" height=\"1530\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24968257"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"senesh\" ,\r\n    \"email\" : \"hansanasm5@gmail.com\" ,\r\n    \"password\" : \"123456789\" ,\r\n    \"usertype\" : \"seller\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login local",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\" ,\r\n    \"password\" : \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODY1NjdlNWMyYjdkYWU3OWIzYzAzY2IiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTE0NzYxOTcsImV4cCI6MTc1MTQ3NzA5N30._RT1ADph2idoVdDYgImYfsZqtHOoXM8pir5sBPmrrbo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\" ,\r\n    \"password\" : \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login google",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\" ,\r\n    \"password\" : \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/google",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODY1NjdlNWMyYjdkYWU3OWIzYzAzY2IiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTE0NzYxOTcsImV4cCI6MTc1MTQ3NzA5N30._RT1ADph2idoVdDYgImYfsZqtHOoXM8pir5sBPmrrbo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\" ,\r\n    \"password\" : \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\" ,\r\n    \"otp\" : \"xT9p\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/verify-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resend-otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/resend-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"resend-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/forgot-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"hansanasm5@gmail.com\",\r\n    \"otp\": \"9USRel\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/reset-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODY1NjdlNWMyYjdkYWU3OWIzYzAzY2IiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTE0NzYxOTcsImV4cCI6MTc1MTQ3NzA5N30._RT1ADph2idoVdDYgImYfsZqtHOoXM8pir5sBPmrrbo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODY1NjdlNWMyYjdkYWU3OWIzYzAzY2IiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTE0NzYxOTcsImV4cCI6MTc1MjA4MDk5N30.z9eG2czNmYWN0OywFpezAMLJ1nGtNpXHLS6zs3qJ4c4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bakery",
+			"item": [
+				{
+					"name": "seller",
+					"item": [
+						{
+							"name": "create-seller",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "userId",
+											"value": "68656c7922c3eab478116e84",
+											"type": "text"
+										},
+										{
+											"key": "businessName",
+											"value": "Cake",
+											"type": "text"
+										},
+										{
+											"key": "ownerName",
+											"value": "Cake Owner",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "test description for this",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "test location",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "test address",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/premium_photo-1663839412026-51a44cfadfb8.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/seller",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"seller"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get seller by user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/seller/user/:userId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"seller",
+										"user",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "68656c7922c3eab478116e84"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get seller by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/seller/:sellerId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"seller",
+										":sellerId"
+									],
+									"variable": [
+										{
+											"key": "sellerId",
+											"value": "68657168af01ab4ed22ed72c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all sellers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/sellers?page=1&limit=50",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"sellers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "50"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update seller",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "userId",
+											"value": "68656c7922c3eab478116e84",
+											"type": "text"
+										},
+										{
+											"key": "businessName",
+											"value": "Cake",
+											"type": "text"
+										},
+										{
+											"key": "ownerName",
+											"value": "Cake Owner",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "test description for this",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "test location upodate",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "test address",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/547a8912-0072-42de-bbb9-67f3eef64e77_1751478631748.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/seller/:sellerId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"seller",
+										":sellerId"
+									],
+									"variable": [
+										{
+											"key": "sellerId",
+											"value": "68657168af01ab4ed22ed72c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add logo",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/547a8912-0072-42de-bbb9-67f3eef64e77_1751478631748.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/seller/logo/:sellerId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"seller",
+										"logo",
+										":sellerId"
+									],
+									"variable": [
+										{
+											"key": "sellerId",
+											"value": "68657168af01ab4ed22ed72c"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "category",
+					"item": [
+						{
+							"name": "create category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "test category",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/547a8912-0072-42de-bbb9-67f3eef64e77_1751478631748.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/category",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all categories",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "test category",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/547a8912-0072-42de-bbb9-67f3eef64e77_1751478631748.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/categories",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get category by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/category/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "68658343afc6db5b3786b09f"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test update",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "test category update",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"description": "This is optional",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/360_F_110263419_6d9oWmooHp0tLqQrG6ypqQk7KRqxIkSE.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/category/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "68658343afc6db5b3786b09f"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete category",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/category/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "68658343afc6db5b3786b09f"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "product",
+					"item": [
+						{
+							"name": "create product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "sellerId",
+											"value": "68657168af01ab4ed22ed72c",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "categoryId",
+											"value": "686588538258aa35dd4c1682",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "+100",
+											"type": "text"
+										},
+										{
+											"key": "preparationTime",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "deliveryInfo",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "whatsAppNumber",
+											"value": "0785678909",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/premium_photo-1663839412026-51a44cfadfb8.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/product",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/products?page=1&limit=50",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"products"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "50"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get products count",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/products/count",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"products",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get product by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/product/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6865890bc2480f5c565d3471"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all products by seller id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/products/seller/:sellerId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"products",
+										"seller",
+										":sellerId"
+									],
+									"variable": [
+										{
+											"key": "sellerId",
+											"value": "68657168af01ab4ed22ed72c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update product",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "categoryId",
+											"value": "686588538258aa35dd4c1682",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "test update",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "preparationTime",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "deliveryInfo",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "whatsAppNumber",
+											"value": "0785678909",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/SENESH/Downloads/premium_photo-1663839412026-51a44cfadfb8.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/product/:productId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"product",
+										":productId"
+									],
+									"variable": [
+										{
+											"key": "productId",
+											"value": "6865890bc2480f5c565d3471"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/product/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6865890bc2480f5c565d3471"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "reviews",
+					"item": [
+						{
+							"name": "create review",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "sellerId",
+											"value": "68657168af01ab4ed22ed72c",
+											"type": "text"
+										},
+										{
+											"key": "userId",
+											"value": "68656c7922c3eab478116e84",
+											"type": "text"
+										},
+										{
+											"key": "rating",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "comment",
+											"value": "nice",
+											"type": "text"
+										},
+										{
+											"key": "images",
+											"description": "this is optional",
+											"type": "file",
+											"src": [
+												"/C:/Users/SENESH/Downloads/360_F_110263419_6d9oWmooHp0tLqQrG6ypqQk7KRqxIkSE.jpg",
+												"/C:/Users/SENESH/Downloads/547a8912-0072-42de-bbb9-67f3eef64e77_1751478631748.jpeg",
+												"/C:/Users/SENESH/Downloads/premium_photo-1663839412026-51a44cfadfb8.jpeg"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/review/seller",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"review",
+										"seller"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get reviews by seller id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/reviews/seller/:sellerId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"reviews",
+										"seller",
+										":sellerId"
+									],
+									"variable": [
+										{
+											"key": "sellerId",
+											"value": "68657168af01ab4ed22ed72c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get reviews by user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/reviews/user/:userId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"reviews",
+										"user",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "68656c7922c3eab478116e84"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all reviews",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/reviews?page=1&limit=50",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"reviews"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "50"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get review by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/review/:reviewId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"review",
+										":reviewId"
+									],
+									"variable": [
+										{
+											"key": "reviewId",
+											"value": "686630ff3ecb3b07fe507f53"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "top rated sellers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/review/top-rated-sellers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"review",
+										"top-rated-sellers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update review",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "rating",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "comment",
+											"value": "updated comment",
+											"type": "text"
+										},
+										{
+											"key": "images",
+											"description": "This is optional",
+											"type": "file",
+											"src": [
+												"/C:/Users/SENESH/Downloads/360_F_110263419_6d9oWmooHp0tLqQrG6ypqQk7KRqxIkSE.jpg",
+												"/C:/Users/SENESH/Downloads/547a8912-0072-42de-bbb9-67f3eef64e77_1751478631748.jpeg",
+												"/C:/Users/SENESH/Downloads/premium_photo-1663839412026-51a44cfadfb8.jpeg"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bakery/review/:reviewId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"review",
+										":reviewId"
+									],
+									"variable": [
+										{
+											"key": "reviewId",
+											"value": "686630ff3ecb3b07fe507f53"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete review",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bakery/review/:reviewId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bakery",
+										"review",
+										":reviewId"
+									],
+									"variable": [
+										{
+											"key": "reviewId",
+											"value": "686630ff3ecb3b07fe507f53"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get sellers buyers counts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/sellers-buyers-counts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"sellers-buyers-counts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get account creation history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/account-creation-history?type=daily ",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"account-creation-history"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "daily ",
+									"description": "daily | monthly | yearly"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000"
+		}
+	]
+}
