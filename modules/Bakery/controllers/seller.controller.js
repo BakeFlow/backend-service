@@ -8,6 +8,7 @@ const Seller = require("../../../models/seller.model");
 const user_roles = require("../../../core/enums/user.roles.enum");
 const User = require("../../../models/user.model");
 const processImageUpload = require("../../../core/utils/file.upload.utils");
+const seller_status = require("../../../core/enums/seller.status.enum");
 
 //create seller
 const createSeller = async (req, res) => {
@@ -198,6 +199,70 @@ const addLogo = async (req, res) => {
   }
 };
 
+//get sellers by location
+const getSellersByLocation = async (req, res) => {
+  try {
+    const { location } = req.params;
+
+    if (!location) {
+      return res.status(400).json({ success: false, message: "Location is required" });
+    }
+    const sellers = await Seller.find({ location: { $regex: new RegExp(location, "i") } }).populate("user", "name email");
+
+    if (sellers.length === 0) {
+      return res.status(404).json({ success: false, message: "No sellers found in this location" });
+    }
+
+    res.status(200).json({ success: true, data: sellers });
+
+  } catch (error) {
+    console.error("Error fetching sellers by location:", error);
+    res.status(500).json({ success: false, message: error.message || "Internal server error" });
+  }
+};
+
+//get all locations
+const getAllLocations = async (req, res) => {
+  try {
+    const locations = await Seller.distinct("location");
+    res.status(200).json({
+      success: true,
+      data: locations,
+    });
+
+  } catch (error) {
+    console.error("Error fetching locations: ", error);
+    res.status(500).json({ success: false, message: error.message || "Internal server error" });
+  }
+};
+
+//update seller status (admin only) 
+const updateSellerStatus = async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const { status } = req.body;
+
+    if (!status || !Object.values(seller_status).includes(status)) {
+      return res.status(400).json({ success: false, message: "Invalid status" });
+    }
+
+    const seller = await Seller.findById(sellerId);
+    if (!seller) {
+      return res.status(404).json({ success: false, message: "Seller not found" });
+    }
+
+    // Update status
+    seller.status = status;
+    await seller.save();
+
+    res.status(200).json({ success: true, message: "Seller status updated successfully", data: seller });
+
+  } catch (error) {
+    console.error("Error updating seller status: ", error);
+    res.status(500).json({ success: false, message: error.message || "Internal server error" });
+  }
+};
+
 module.exports = {
   createSeller,
   getSellerByUserId,
@@ -205,4 +270,7 @@ module.exports = {
   getAllSellers,
   updateSeller,
   addLogo,
+  getSellersByLocation,
+  getAllLocations,
+  updateSellerStatus
 };
