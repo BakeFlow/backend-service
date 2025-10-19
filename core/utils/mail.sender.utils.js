@@ -12,24 +12,24 @@ oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 async function sendMail(email, title, body) {
   console.log("Sending email..." + email + " " + title + " " + body);
 
-  // const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
+  const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
-  // const message = [`From: ${process.env.GMAIL}`, `To: ${email}`, "Content-Type: text/html; charset=utf-8", "MIME-Version: 1.0", `Subject: ${title}`, "", body].join("\n");
+  const message = [`From: ${process.env.GMAIL}`, `To: ${email}`, "Content-Type: text/html; charset=utf-8", "MIME-Version: 1.0", `Subject: ${title}`, "", body].join("\n");
 
-  // const encodedMessage = Buffer.from(message).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  const encodedMessage = Buffer.from(message).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 
-  // try {
-  //   await gmail.users.messages.send({
-  //     userId: "me",
-  //     requestBody: {
-  //       raw: encodedMessage,
-  //     },
-  //   });
-  //   console.log("Email sent successfully!");
-  // } catch (error) {
-  //   console.error("Error sending email:", error);
-  //   throw error;
-  // }
+  try {
+    await gmail.users.messages.send({
+      userId: "me",
+      requestBody: {
+        raw: encodedMessage,
+      },
+    });
+    console.log("Email sent successfully!");
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw error;
+  }
 }
 
 module.exports = sendMail;

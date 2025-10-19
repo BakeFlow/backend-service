@@ -31,7 +31,7 @@ const getAccountCreationHistory = async (req, res) => {
     }
 
     let startDate, format, groupBy;
-    const today = new Date();
+   
 
     if (type === "daily") {
       startDate = moment().subtract(6, "days").startOf("day").toDate(); // 7 days including today

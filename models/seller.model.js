@@ -40,7 +40,7 @@ const sellerSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: Object.values.values(seller_status),
+      enum: Object.values(seller_status),
       default: seller_status.PENDING,
     },
   },
