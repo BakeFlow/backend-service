@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { createCategory, getAllCategories, getCategoryById, updateCategory, deleteCategory } = require("./controllers/category.controller");
-const { createSeller, getSellerByUserId, getSellerById, getAllSellers, updateSeller, addLogo } = require("./controllers/seller.controller");
+const { createSeller, getSellerByUserId, getSellerById, getAllSellers, updateSeller, addLogo, getSellersByLocation, getAllLocations, updateSellerStatus } = require("./controllers/seller.controller");
 const { createProduct, getAllProducts, getProductById, getProductsBySellerId, updateProduct, deleteProduct, getTotalProductsCount } = require("./controllers/product.controller");
 const { createReview, getReviewsBySeller, getReviewsByUser, getAllReviews, getReviewById, updateReview, deleteReview, getTopRatedSellers } = require("./controllers/review.controller");
 
@@ -22,6 +22,9 @@ router.get("/seller/:sellerId", getSellerById);
 router.get("/sellers", getAllSellers);
 router.put("/seller/:sellerId", upload.single("image"), updateSeller);
 router.put("/seller/logo/:sellerId", upload.single("image"), addLogo);
+router.get("/sellers/location/:location", getSellersByLocation);
+router.get("/sellers/locations", getAllLocations);
+router.put("/seller/status/:sellerId", updateSellerStatus);
 
 //product routes
 router.post("/product", upload.single("image"), createProduct);
