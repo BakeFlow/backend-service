@@ -1,4 +1,4 @@
-# CAKE_HUB Backend
+# BakeFlow Backend
 
 This is the backend service for the CAKE_HUB project.
 
